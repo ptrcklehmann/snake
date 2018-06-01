@@ -8,6 +8,7 @@ var snakeDirection;
 
 
 var food;
+var foodName = 'watermelon';
 
 var score = 0;
 
@@ -17,6 +18,7 @@ var screenHeight;
 
 var gameState;
 var gameOverMenu;
+var playButton;
 var restartButton;
 var playHUD;
 var scoreboard;
@@ -28,7 +30,8 @@ ___________________________________________*/
 gameInit();
 snakeInit();
 foodInit();
-setInterval(gameLoop,1000/20)
+setInterval(gameLoop,1000/10);
+
 
 /*//////////////////////////////////////////
 GAME FUNCTIONS
@@ -49,28 +52,34 @@ function gameInit(){ //Initialize the whole game
     gameOverMenu = document.getElementById('game_over');
     centerMenuPosition(gameOverMenu);
 
+    mainMenu = document.getElementById('main_menu');
+    centerMenuPosition(mainMenu);
+
+    playButton = document.getElementById('play');
+    playButton.addEventListener('click', gameRestart);
+
     restartButton = document.getElementById('restart_button');
     restartButton.addEventListener('click', gameRestart);
 
     playHUD = document.getElementById('playHUD');
     scoreboard = document.getElementById('scoreboard');
 
-    setState("play");
+    setState("main");
 }
 
-function gameLoop(){
-    gameDraw();
-    drawScoreBoard();
-    if (gameState == "play"){
-      snakeUpdate();
-      snakeDraw();
-      foodDraw();
+function gameLoop(){ // Make sure game is working at all times
+            gameDraw();
+            drawScoreBoard();
+          if (gameState == "play"){
+            snakeDraw();
+            snakeUpdate();
+            foodDraw();
   }
 
-} // Make sure game is working at all times
+}
 
 function gameDraw(){// Draw the game on the screen
-    context.fillStyle = "rgb(219, 242, 187)";
+    context.fillStyle = "rgb(222, 203, 126)";
     context.fillRect(0, 0, screenWidth, screenHeight); //fills up the whole screen with a retangle
 }
 
@@ -78,6 +87,7 @@ function gameRestart(){
     snakeInit();
     foodInit();
     hideMenu(gameOverMenu);
+    hideMenu(mainMenu);
     setState('play');
 
 }
@@ -85,10 +95,11 @@ function gameRestart(){
 /*//////////////////////////////////////////
 SNAKE FUNCTIONS
 ___________________________________________*/
+
 function snakeInit(){ //Initialize the snake arrays
     snake = [];
     snakeLength = 3;
-    snakeSize = 20;
+    snakeSize = 23;
     snakeDirection = "down";
     score = 0;
 
@@ -102,9 +113,9 @@ function snakeInit(){ //Initialize the snake arrays
 
 function snakeDraw(){ //Draw the snake on the canvas
     for (var i = 0; i < snake.length; i++){
-      context.fillStyle = "rgb(171, 205, 36)";
-      context.shadowColor = "rgb(190, 190, 190)";
-      context.shadowBlur = 5;
+      context.fillStyle = "rgb(103, 129, 22)";
+      context.shadowColor = "rgb(142, 157, 30)";
+      context.shadowBlur = 4;
       context.fillRect(snake[i].x * snakeSize, snake[i].y * snakeSize, snakeSize, snakeSize);
 
     }
@@ -127,17 +138,23 @@ function snakeUpdate() {
     snakeHeadX--;
   }
 
-  checkFoodColisions(snakeHeadX, snakeHeadY); //this checks if there was a food colision
-                                            //and passes the arguments so the loval variables work in the actual function
+    checkFoodColisions(snakeHeadX, snakeHeadY);//this checks if there was a food colision
+    //and passes the arguments so the loval variables work in the actual function
 
-  checkWallColisions(snakeHeadX, snakeHeadY);
 
-  checkSnakeColisions(snakeHeadX, snakeHeadY);
+    checkSnakeColisions(snakeHeadX, snakeHeadY);
+
 
   var snakeTail = snake.pop();
   snakeTail.x = snakeHeadX;
   snakeTail.y = snakeHeadY;
   snake.unshift(snakeTail);
+
+
+  checkWallColisions(snakeHeadX, snakeHeadY);
+
+  console.log("x" + snakeHeadX);
+  console.log("y" + snakeHeadY);
 }
 
 /*//////////////////////////////////////////
@@ -150,16 +167,23 @@ function foodInit(){
   };
   setFoodPosition();
 }
+function foodMixer() { // stores a different food inside the variable
+  var foodMix = ['watermelon', 'coffee', 'egg', 'pint', 'pizza', 'doughnut', 'orange'];
+  var index = Math.floor(Math.random() * 6) + 1;
+  foodName = foodMix[index];
+}
+
 function foodDraw() {
-    var img = document.getElementById('watermelon');
-    context.drawImage(img, food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
+
+    var img = document.getElementById(foodName);
+    context.drawImage(img, food.x * snakeSize, food.y * snakeSize, snakeSize + 3, snakeSize + 3);
 
     //context.fillStyle = "rgb(251, 3, 98)";
     //context.fillRect(food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
 }
 function setFoodPosition(){
-    var randomX = Math.floor(Math.random()*(screenWidth));
-    var randomY = Math.floor(Math.random()*(screenHeight));
+    var randomX = Math.floor(Math.random()*(screenWidth - 10));
+    var randomY = Math.floor(Math.random()*(screenHeight - 10));
 
     food.x = Math.floor(randomX / snakeSize); // this puts the food on the same grid position as the snake
     food.y = Math.floor(randomY / snakeSize);
@@ -194,23 +218,26 @@ function checkFoodColisions (snakeHeadX, snakeHeadY){
       y:0
     });
     setFoodPosition();
+    foodMixer();
     snakeLength++;
     score += 1000;
+
   }
 }
 
 function checkWallColisions(snakeHeadX, snakeHeadY) {
-    if (snakeHeadX * snakeSize >= screenWidth || snakeHeadX * snakeSize <0){
-      setState("game over");
+
+    if (snakeHeadX * snakeSize >= screenWidth || snakeHeadX * snakeSize < 0){
+    setState("game over");
 
     }
+
     if (snakeHeadY * snakeSize >= screenHeight|| snakeHeadY * snakeSize < 0){
       setState("game over");
 
     }
 
 }
-
 function checkSnakeColisions(snakeHeadX, snakeHeadY){
     for (var i = 1; i < snakeLength; i++ ){ //starts with 1 because it's not necessary to check the head
       if(snakeHeadX == snake[i].x && snakeHeadY == snake[i].y){
@@ -246,6 +273,9 @@ GAME STATE HANDLING
    }
    else if (state == "play"){
      displayMenu(playHUD);
+   }
+   else if (state == "main"){
+     displayMenu(mainMenu);
    }
  }
  function centerMenuPosition(menu) {

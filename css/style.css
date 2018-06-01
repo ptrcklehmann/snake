@@ -14,10 +14,28 @@ visibility: hidden;
   position: absolute;
   visibility: hidden;
 }
-
+#main_menu {
+  font-family: 'Cabin Sketch', cursive;
+  color: #8e9d1e;
+  text-align: center;
+  font-size: 90px;
+  margin-bottom: 0px;
+  margin-top: 0px;
+}
+#play {
+  font-size: 20px;
+  font-family: 'Roboto Slab', serif;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color: #b0bf3b;
+}
+#play:hover {
+  color: #d53010;
+  cursor: pointer;
+}
 h1 {
   font-family: 'Cabin Sketch', cursive;
-  color: rgb(68, 66, 66);
+  color: #d53010;
   text-align: center;
   font-size: 62px;
   margin-bottom: 0px;
@@ -25,14 +43,13 @@ h1 {
 }
 h3 {
   font-family: 'Roboto Slab', serif;
-  font-style: italic;
   color: rgb(68, 66, 66);
   text-align: center;
 
 }
 h2 {
   font-family: 'Roboto Slab', serif;
-  color: rgb(68, 66, 66);
+  color: #d53010;
   text-align: center;
   margin-top: 0;
   margin-bottom: 0;
@@ -40,15 +57,15 @@ h2 {
 
 }
 #restart_button {
-  border: 2px solid rgb(68, 66, 66);
-  border-radius: 10px;
+
+
 }
 #restart_button:hover {
-  background-color: rgb(26, 207, 87);
+  color: #d53010;
   cursor: pointer;
 }
 
-#watermelon {
+#watermelon, #coffee, #egg, #pint, #pizza, #doughnut, #orange {
   position: absolute;
   visibility: hidden;
 }
