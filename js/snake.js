@@ -25,9 +25,15 @@ var playHUD;
 var scoreboard;
 var gameSpeed = 1000/10;
 
+<<<<<<< HEAD
 var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it. 
 var chewSound = new Audio("sounds/chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
 var gameOver = new Audio("sounds/game-over.wav"); //This work is licensed under the Creative Commons 0 License.
+=======
+var soundtrack = new Audio("fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it. 
+var chewSound = new Audio("chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
+var gameOver = new Audio("game-over.wav"); //This work is licensed under the Creative Commons 0 License.
+>>>>>>> 7262edca19daa0b0b4e0c1765f1bd0bfeacd2682
 
 
 /*//////////////////////////////////////////
