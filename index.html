@@ -4,9 +4,10 @@
 	<head>
 		<meta charset = "utf-8">
 		<title>snake();</title>
-		<meta name="viewport">
+		<meta name="viewport" content="user-scalable=no, width=device-width, initial-scale=1, maximum-scale=1">
 			<link href="https://fonts.googleapis.com/css?family=Cabin+Sketch|Roboto+Slab" rel="stylesheet">
-			<link href = "css/style.css" rel ="stylesheet" type="text/css">
+			<script src="http://hammerjs.github.io/dist/hammer.min.js"></script>
+			<link href ="css/style.css" rel ="stylesheet" type="text/css">
 	</head>
 	<body>
         <img id="watermelon" width="100" height="100" src="img/watermelon.png" alt="watermelon" display="hidden">
@@ -24,15 +25,18 @@
 
 		<section id="main_menu">
 			<p class="game_logo"><span>S</span><span>N</span><span>A</span><span>K</span><span>E</span><span>()</span><span>;</span></p>
+			<p id="instructions">use ⇦ ⇧ ⇨ ⇩ keys to move</p>
 			<p id="play">play</p>
 		</section>
 		<section id="playHUD">
             <h2 id="scoreboard"></h2>
+						<p id="musiconoff">music on/off</p>
 		</section>
 		<section id="game_over">
             <h1 class="game_over_tittle"><span>G</span><span>A</span><span>M</span><span>E</span> <span>O</span><span>V</span><span>E</span><span>R</span></h1>
 			<h3 id="restart_button">play again</h3></section>
 		<canvas id="game_screen"></canvas>
         <script src="js/snake.js"></script>
+
     </body>
 </html>

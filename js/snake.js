@@ -29,7 +29,23 @@ var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the gam
 var chewSound = new Audio("sounds/chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
 var gameOver = new Audio("sounds/game-over.wav"); //This work is licensed under the Creative Commons 0 License.
 
-
+/*//////////////////////////////////////////
+HAMMERS LIBRARY
+___________________________________________*/
+var canvas = document.getElementById('game_screen');
+var hammertime = new Hammer(canvas);
+hammertime.on('panleft', function(ev) {
+  if (!= "right"){snakeDirection = "left";}
+});
+hammertime.on('panright', function(ev) {
+  if (!= "left"){snakeDirection = "right";}
+});
+hammertime.on('panup', function(ev) {
+  if (!= "down"){snakeDirection = "up";}
+});
+hammertime.on('pandown', function(ev) {
+  if (!= "up"){snakeDirection = "down";}
+});
 /*//////////////////////////////////////////
 EXECUTING GAME CODE
 ___________________________________________*/

@@ -29,6 +29,14 @@ visibility: hidden;
   margin-top: 0px;
   color: #b0bf3b;
 }
+#instructions {
+  font-size: 15px;
+  font-family: 'Roboto Slab', serif;
+  margin-bottom: 0px;
+  margin-top: 0px;
+  color: #b0bf3b;
+
+}
 #play:hover {
   color: #d53010;
   cursor: pointer;
