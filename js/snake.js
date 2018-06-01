@@ -25,15 +25,9 @@ var playHUD;
 var scoreboard;
 var gameSpeed = 1000/10;
 
-<<<<<<< HEAD
-var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it. 
+var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it.
 var chewSound = new Audio("sounds/chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
 var gameOver = new Audio("sounds/game-over.wav"); //This work is licensed under the Creative Commons 0 License.
-=======
-var soundtrack = new Audio("fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it. 
-var chewSound = new Audio("chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
-var gameOver = new Audio("game-over.wav"); //This work is licensed under the Creative Commons 0 License.
->>>>>>> 7262edca19daa0b0b4e0c1765f1bd0bfeacd2682
 
 
 /*//////////////////////////////////////////
@@ -59,7 +53,7 @@ function gameInit(){ //Initialize the whole game
     canvas.width = screenWidth;
     canvas.height = screenHeight;
 
-    document.addEventListener('keydown',keyboardHandler); 
+    document.addEventListener('keydown',keyboardHandler);
 
     gameOverMenu = document.getElementById('game_over');
     centerMenuPosition(gameOverMenu);
@@ -158,7 +152,7 @@ function snakeUpdate() {
     checkSnakeColisions(snakeHeadX, snakeHeadY);
 
 
-          var snakeTail = snake.pop(); // Updates the snake array: the head becomes the last bit of the  tail and so on. 
+          var snakeTail = snake.pop(); // Updates the snake array: the head becomes the last bit of the  tail and so on.
           snakeTail.x = snakeHeadX;
           snakeTail.y = snakeHeadY;
           snake.unshift(snakeTail);
@@ -194,7 +188,7 @@ function foodDraw() {
     var img = document.getElementById(foodName); // Calls the variable foodName with a different food name
     context.drawImage(img, food.x * snakeSize, food.y * snakeSize, snakeSize + 3, snakeSize + 3); // Draws the food on canvas
 
-    //context.fillStyle = "rgb(251, 3, 98)"; // Old version of the game, the food was once only a 
+    //context.fillStyle = "rgb(251, 3, 98)"; // Old version of the game, the food was once only a
     //context.fillRect(food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
 }
 function setFoodPosition(){
@@ -238,7 +232,7 @@ function checkFoodColisions (snakeHeadX, snakeHeadY){
     foodMixer();
     snakeLength++;
     score += 10;
-         
+
 
   }
 }
@@ -251,7 +245,7 @@ function checkWallColisions(snakeHeadX, snakeHeadY) {
     }
 
     if (snakeHeadY * snakeSize >= screenHeight|| snakeHeadY * snakeSize < 0){
-        
+
         setState("game over");
         gameOver.play();
     }
@@ -303,6 +297,6 @@ GAME STATE HANDLING
    menu.style.left = (screenWidth/2) - (menu.offsetWidth /2) + "px";
 
  }
- function drawScoreBoard() { 
+ function drawScoreBoard() {
    scoreboard.innerHTML = 'score: ' + score;
  }
