@@ -23,7 +23,7 @@ var playButton;
 var restartButton;
 var playHUD;
 var scoreboard;
-var gameSpeed = 1000/10;
+var gameSpeed = 1000/9;
 
 var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it.
 var chewSound = new Audio("sounds/chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
@@ -69,6 +69,8 @@ function gameInit(){ //Initialize the whole game
     screenWidth = window.innerWidth;
     screenHeight = window.innerHeight;
     //set the canvas size for the actual screen size
+    setMobileMode();
+
     canvas.width = screenWidth;
     canvas.height = screenHeight;
 
@@ -90,6 +92,11 @@ function gameInit(){ //Initialize the whole game
     scoreboard = document.getElementById('scoreboard');
 
     setState("main");
+}
+function setMobileMode() {
+  if (screenWidth <= 400){
+    gameSpeed = 1000/5;
+  }
 }
 
 function gameLoop(){ // Make sure game is working at all times
