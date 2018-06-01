@@ -49,7 +49,7 @@ hammertime.on('panup', function(ev) {
 hammertime.on('pandown', function(ev) {
   if (snakeDirection != "up"){snakeDirection = "down";}
 });
-hammertime.on("dragup dragdown swipeup swipedown" function(ev){
+hammertime.on("dragup dragdown swipeup swipedown", function(ev){
 console.log('swipe or drag detected')});
 /*//////////////////////////////////////////
 EXECUTING GAME CODE
