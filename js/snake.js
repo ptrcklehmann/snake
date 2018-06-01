@@ -5,6 +5,7 @@ var snake;
 var snakeLength;
 var snakeSize;
 var snakeDirection;
+var snakeColor;
 
 
 var food;
@@ -22,6 +23,11 @@ var playButton;
 var restartButton;
 var playHUD;
 var scoreboard;
+var gameSpeed = 1000/10;
+
+var soundtrack = new Audio("sounds/fun-festival.mp3"); // Extracted from the game "Stardew Valley". I own no credits for this sound and have no intention to make any profit with it. 
+var chewSound = new Audio("sounds/chewing.wav"); // "Chewing, Carrot, A.wav" by InspectorJ of Freesound.org
+var gameOver = new Audio("sounds/game-over.wav"); //This work is licensed under the Creative Commons 0 License.
 
 
 /*//////////////////////////////////////////
@@ -30,7 +36,7 @@ ___________________________________________*/
 gameInit();
 snakeInit();
 foodInit();
-setInterval(gameLoop,1000/10);
+setInterval(gameLoop,gameSpeed);
 
 
 /*//////////////////////////////////////////
@@ -47,7 +53,7 @@ function gameInit(){ //Initialize the whole game
     canvas.width = screenWidth;
     canvas.height = screenHeight;
 
-    document.addEventListener('keydown',keyboardHandler);
+    document.addEventListener('keydown',keyboardHandler); 
 
     gameOverMenu = document.getElementById('game_over');
     centerMenuPosition(gameOverMenu);
@@ -71,6 +77,7 @@ function gameLoop(){ // Make sure game is working at all times
             gameDraw();
             drawScoreBoard();
           if (gameState == "play"){
+            soundtrack.play();
             snakeDraw();
             snakeUpdate();
             foodDraw();
@@ -83,7 +90,7 @@ function gameDraw(){// Draw the game on the screen
     context.fillRect(0, 0, screenWidth, screenHeight); //fills up the whole screen with a retangle
 }
 
-function gameRestart(){
+function gameRestart(){ // Restarts the game
     snakeInit();
     foodInit();
     hideMenu(gameOverMenu);
@@ -102,7 +109,7 @@ function snakeInit(){ //Initialize the snake arrays
     snakeSize = 23;
     snakeDirection = "down";
     score = 0;
-
+    colorMixer();
     for (var i = snakeLength - 1; i >= 0; i--){
         snake.push({ //creates a new part of the snake
           x: i,
@@ -113,7 +120,7 @@ function snakeInit(){ //Initialize the snake arrays
 
 function snakeDraw(){ //Draw the snake on the canvas
     for (var i = 0; i < snake.length; i++){
-      context.fillStyle = "rgb(103, 129, 22)";
+      context.fillStyle = snakeColor;
       context.shadowColor = "rgb(142, 157, 30)";
       context.shadowBlur = 4;
       context.fillRect(snake[i].x * snakeSize, snake[i].y * snakeSize, snakeSize, snakeSize);
@@ -145,40 +152,43 @@ function snakeUpdate() {
     checkSnakeColisions(snakeHeadX, snakeHeadY);
 
 
-  var snakeTail = snake.pop();
-  snakeTail.x = snakeHeadX;
-  snakeTail.y = snakeHeadY;
-  snake.unshift(snakeTail);
+          var snakeTail = snake.pop(); // Updates the snake array: the head becomes the last bit of the  tail and so on. 
+          snakeTail.x = snakeHeadX;
+          snakeTail.y = snakeHeadY;
+          snake.unshift(snakeTail);
 
 
   checkWallColisions(snakeHeadX, snakeHeadY);
 
-  console.log("x" + snakeHeadX);
-  console.log("y" + snakeHeadY);
+}
+function colorMixer() { // stores a different food inside the variable. The images are pre-loaded on the HTML file with hidden visibility
+  var colorMix = ['rgb(166, 149, 63)', 'rgb(75, 155, 95)', 'rgb(96, 159, 133)', 'rgb(202, 140, 78)'];
+  var index = Math.floor(Math.random() * 3) + 1;
+  snakeColor = colorMix[index];
 }
 
 /*//////////////////////////////////////////
 FOOD FUNCTIONS
 ___________________________________________*/
-function foodInit(){
+function foodInit(){ // Initializes the food
     food = {
     x: 0,
     y: 0
   };
   setFoodPosition();
 }
-function foodMixer() { // stores a different food inside the variable
-  var foodMix = ['watermelon', 'coffee', 'egg', 'pint', 'pizza', 'doughnut', 'orange'];
-  var index = Math.floor(Math.random() * 6) + 1;
+function foodMixer() { // stores a different food inside the variable. The images are pre-loaded on the HTML file with hidden visibility
+  var foodMix = ['watermelon', 'coffee', 'egg', 'pint', 'pizza', 'doughnut', 'orange', 'fruit', 'jar', 'salad', 'snack', 'vegetable'];
+  var index = Math.floor(Math.random() * 11) + 1;
   foodName = foodMix[index];
 }
 
 function foodDraw() {
 
-    var img = document.getElementById(foodName);
-    context.drawImage(img, food.x * snakeSize, food.y * snakeSize, snakeSize + 3, snakeSize + 3);
+    var img = document.getElementById(foodName); // Calls the variable foodName with a different food name
+    context.drawImage(img, food.x * snakeSize, food.y * snakeSize, snakeSize + 3, snakeSize + 3); // Draws the food on canvas
 
-    //context.fillStyle = "rgb(251, 3, 98)";
+    //context.fillStyle = "rgb(251, 3, 98)"; // Old version of the game, the food was once only a 
     //context.fillRect(food.x * snakeSize, food.y * snakeSize, snakeSize, snakeSize);
 }
 function setFoodPosition(){
@@ -213,6 +223,7 @@ COLISION HANDLING
  __________________________________________*/
 function checkFoodColisions (snakeHeadX, snakeHeadY){
     if (snakeHeadX == food.x && snakeHeadY == food.y){
+    chewSound.play();
     snake.push({
       x:0,
       y:0
@@ -220,7 +231,8 @@ function checkFoodColisions (snakeHeadX, snakeHeadY){
     setFoodPosition();
     foodMixer();
     snakeLength++;
-    score += 1000;
+    score += 10;
+         
 
   }
 }
@@ -228,13 +240,14 @@ function checkFoodColisions (snakeHeadX, snakeHeadY){
 function checkWallColisions(snakeHeadX, snakeHeadY) {
 
     if (snakeHeadX * snakeSize >= screenWidth || snakeHeadX * snakeSize < 0){
-    setState("game over");
-
+        setState("game over");
+        gameOver.play();
     }
 
     if (snakeHeadY * snakeSize >= screenHeight|| snakeHeadY * snakeSize < 0){
-      setState("game over");
-
+        
+        setState("game over");
+        gameOver.play();
     }
 
 }
@@ -268,21 +281,22 @@ GAME STATE HANDLING
  }
 
  function showMenu(state) { // show menu depending on the state
-   if (state == "game over"){ // game over or play state
-     displayMenu(gameOverMenu);
+   if (state == "game over"){ // game over state
+        soundtrack.pause();
+       displayMenu(gameOverMenu);
    }
-   else if (state == "play"){
+   else if (state == "play"){ // play state
      displayMenu(playHUD);
    }
-   else if (state == "main"){
+   else if (state == "main"){ // main menu state
      displayMenu(mainMenu);
    }
  }
- function centerMenuPosition(menu) {
+ function centerMenuPosition(menu) { // This calculates the screen area and centers the menu Elements
    menu.style.top = (screenHeight/2) - (menu.offsetHeight /2)+ "px";
    menu.style.left = (screenWidth/2) - (menu.offsetWidth /2) + "px";
 
  }
- function drawScoreBoard() {
+ function drawScoreBoard() { 
    scoreboard.innerHTML = 'score: ' + score;
  }
