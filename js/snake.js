@@ -33,7 +33,10 @@ var gameOver = new Audio("sounds/game-over.wav"); //This work is licensed under 
 HAMMERS LIBRARY
 ___________________________________________*/
 var canvas = document.getElementById('game_screen');
-var hammertime = new Hammer(canvas);
+var options = {
+  preventDefault: true
+};
+var hammertime = new Hammer(canvas,options);
 hammertime.on('panleft', function(ev) {
   if (snakeDirection != "right"){snakeDirection = "left";}
 });
