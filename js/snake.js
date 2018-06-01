@@ -35,16 +35,16 @@ ___________________________________________*/
 var canvas = document.getElementById('game_screen');
 var hammertime = new Hammer(canvas);
 hammertime.on('panleft', function(ev) {
-  if (!= "right"){snakeDirection = "left";}
+  if (snakeDirection != "right"){snakeDirection = "left";}
 });
 hammertime.on('panright', function(ev) {
-  if (!= "left"){snakeDirection = "right";}
+  if (snakeDirection != "left"){snakeDirection = "right";}
 });
 hammertime.on('panup', function(ev) {
-  if (!= "down"){snakeDirection = "up";}
+  if (snakeDirection != "down"){snakeDirection = "up";}
 });
 hammertime.on('pandown', function(ev) {
-  if (!= "up"){snakeDirection = "down";}
+  if (snakeDirection != "up"){snakeDirection = "down";}
 });
 /*//////////////////////////////////////////
 EXECUTING GAME CODE

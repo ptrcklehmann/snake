@@ -102,6 +102,14 @@ h2 {
   font-size: 15px;
 
 }
+#musiconoff {
+  font-family: 'Roboto Slab', serif;
+  color: #d53010;
+  text-align: center;
+  margin-top: 0;
+  margin-bottom: 0;
+  font-size: 15px;
+}
 #restart_button {
 
 
@@ -114,8 +122,4 @@ h2 {
 #watermelon, #coffee, #egg, #pint, #pizza, #doughnut, #orange, #fruit, #jar, #salad, #snack, #vegetable {
   position: absolute;
   visibility: hidden;
-}
-
-button {
-    color:
 }
