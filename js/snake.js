@@ -49,6 +49,8 @@ hammertime.on('panup', function(ev) {
 hammertime.on('pandown', function(ev) {
   if (snakeDirection != "up"){snakeDirection = "down";}
 });
+hammertime.on("dragup dragdown swipeup swipedown" function(ev){
+console.log('swipe or drag detected')});
 /*//////////////////////////////////////////
 EXECUTING GAME CODE
 ___________________________________________*/
@@ -73,7 +75,9 @@ function gameInit(){ //Initialize the whole game
 
     canvas.width = screenWidth;
     canvas.height = screenHeight;
-
+    if (canvas.requestFullscreen) {
+        canvas.requestFullscreen();
+    }
     document.addEventListener('keydown',keyboardHandler);
 
     gameOverMenu = document.getElementById('game_over');
@@ -96,9 +100,25 @@ function gameInit(){ //Initialize the whole game
 function setMobileMode() {
   if (screenWidth <= 400){
     gameSpeed = 1000/5;
+    var canvas = document.getElementById('game_screen');
+    requestFullScreen(canvas);
   }
 }
 
+
+function requestFullScreen(canvas) {
+    // Supports most browsers and their versions.
+    var requestMethod = canvas.requestFullScreen || canvas.webkitRequestFullScreen || element.mozRequestFullScreen || element.msRequestFullScreen;
+
+    if (requestMethod) { // Native full screen.
+        requestMethod.call(canvas);
+    } else if (typeof window.ActiveXObject !== "undefined") { // Older IE.
+        var wscript = new ActiveXObject("WScript.Shell");
+        if (wscript !== null) {
+            wscript.SendKeys("{F11}");
+        }
+    }
+}
 function gameLoop(){ // Make sure game is working at all times
             gameDraw();
             drawScoreBoard();
