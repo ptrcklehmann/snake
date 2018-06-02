@@ -301,7 +301,7 @@ function checkSnakeColisions(snakeHeadX, snakeHeadY){
     for (var i = 1; i < snakeLength; i++ ){ //starts with 1 because it's not necessary to check the head
       if(snakeHeadX == snake[i].x && snakeHeadY == snake[i].y){
         setState("game over");
-
+        gameOver.play();
         return;
       }
     }
